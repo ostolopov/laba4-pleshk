@@ -26,19 +26,19 @@ int main(void)
                 replace_words_i_j ();
                 break;
             case 6:
-                
+                change_min_max ();
                 break;
             case 7:
-                
+                max_word_with_letters ();
                 break;
             case 8:
-                
+                vowel_letter ();
                 break;
             case 9:
-                
+                palinom_index ();
                 break;
             case 10:
-                
+                delete_palinom ();
                 break;
             case 11:
                 system("clear");

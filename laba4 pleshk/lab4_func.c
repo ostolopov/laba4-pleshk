@@ -49,6 +49,8 @@ void words_with_letters (void)
     free(str);
 }
 
+
+
 /*
 void words_with_letters1 (void)
 {
@@ -257,12 +259,241 @@ void replace_words_i_j (void)
     free(str);
 }
 
-void change_min_max (void)
+void change_min_max1 (void)
 {
+    char *str = readline(PROMPT);
+    char *str_copy = strdup(str);
+    int arr_size = 0;
     
+    //char *max_word = NULL;
+    //char *min_word = NULL;
+    int min_word_size = 0;
+    int max_word_size = 0;
+    char *word = strtok(str_copy, " ");
+    while (word != NULL)
+    {
+        arr_size++;
+        word = strtok(NULL, " ");
+    }
+    
+    
+    
+    
+    free(str);
 }
 
-void max_word_with_letters ()
+
+
+void change_min_max(void)
 {
-    
+    char *str = readline(PROMPT);
+    char *str_copy = strdup(str);
+    char *min_word = NULL;
+    char *max_word = NULL;
+    int min_length = INT_MAX;
+    int max_length = 0;
+
+    char *word = strtok(str_copy, " ");
+    while (word != NULL)
+    {
+        int word_length = (int)strlen(word);
+        if (word_length < min_length)
+        {
+            min_length = word_length;
+            min_word = word;
+        }
+        if (word_length > max_length)
+        {
+            max_length = word_length;
+            max_word = word;
+        }
+        word = strtok(NULL, " ");
+    }
+
+    if (min_word && max_word)
+    {
+        char *temp = strdup(max_word);
+        char *new_str = malloc((strlen(str) + 1) * sizeof(char));
+        new_str[0] = '\0';
+        word = strtok(str, " ");
+        while (word != NULL)
+        {
+            if (strcmp(word, max_word) == 0)
+            {
+                strcat(new_str, min_word);
+            }
+            else if (strcmp(word, min_word) == 0)
+            {
+                strcat(new_str, temp);
+            }
+            else
+            {
+                strcat(new_str, word);
+            }
+            strcat(new_str, " ");
+            word = strtok(NULL, " ");
+        }
+        printf("%s\n", new_str);
+        free(new_str);
+        free(temp);
+    }
+    free(str_copy);
+    free(str);
 }
+
+void max_word_with_letters(void)
+{
+    char *str = readline(PROMPT);
+    char *str_copy = strdup(str);
+    char *max_word = NULL;
+    int max_length = 0;
+    char *word = strtok(str_copy, " ");
+    while (word != NULL)
+    {
+        int flag = 1;
+        int word_length = (int)strlen(word);
+        for (int i = 0; i < word_length; i++)
+        {
+            for (int j = i + 1; j < word_length; j++)
+            {
+                if (word[i] == word[j])
+                {
+                    flag = 0;
+                    break;
+                }
+            }
+            if (flag == 0)
+                break;
+        }
+        if (flag == 1 && word_length > max_length)
+        {
+            max_length = word_length;
+            max_word = word;
+        }
+        word = strtok(NULL, " ");
+    }
+    if (max_word)
+        printf("%s\n", max_word);
+    free(str_copy);
+    free(str);
+}
+
+
+void vowel_letter(void)
+{
+    char *str = readline(PROMPT);
+    char *str_copy = strdup(str);
+    char vowels[] = "eyuioaEYUIOA";
+    char *word = strtok(str_copy, " ");
+    while (word != NULL)
+    {
+        int vowel_count = 0;
+        for (int i = 0; i < (int)strlen(word); i++)
+        {
+            if (strchr(vowels, word[i]) != NULL)
+            {
+                vowel_count++;
+            }
+        }
+        if (vowel_count > 2)
+        {
+            printf("%s\n", word);
+        }
+        word = strtok(NULL, " ");
+    }
+    free(str_copy);
+    free(str);
+}
+
+void palinom_index(void)
+{
+    char *str = readline(PROMPT);
+    char *str_copy = strdup(str);
+    int max_length = 0;
+    int max_index = -1;
+    int index = 1;
+    char *word = strtok(str_copy, " ");
+    while (word != NULL)
+    {
+        int word_length = (int)strlen(word);
+        int is_palindrome = 1;
+
+        for (int i = 0, j = word_length - 1; i < j; i++, j--)
+        {
+            if (word[i] != word[j])
+            {
+                is_palindrome = 0;
+                break;
+            }
+        }
+        if (is_palindrome && word_length > max_length)
+        {
+            max_length = word_length;
+            max_index = index;
+        }
+
+        word = strtok(NULL, " ");
+        index++;
+    }
+    if (max_index != -1)
+        printf("%d\n", max_index);
+    else
+        printf("Такова нетъ");
+    free(str_copy);
+    free(str);
+}
+
+
+void delete_palinom(void)
+{
+    char *str = readline(PROMPT);
+    char *str_copy = strdup(str);
+    int max_length = 0;
+    char *word = strtok(str_copy, " ");
+    while (word != NULL)
+    {
+        int word_length = (int)strlen(word);
+        int is_palindrome = 1;
+        for (int i = 0, j = word_length - 1; i < j; i++, j--)
+        {
+            if (word[i] != word[j])
+            {
+                is_palindrome = 0;
+                break;
+            }
+        }
+        if (is_palindrome && word_length > max_length)
+        {
+            max_length = word_length;
+        }
+        word = strtok(NULL, " ");
+    }
+    char *result = strdup(str);
+    result[0] = '\0';
+    word = strtok(str, " ");
+    while (word != NULL)
+    {
+        int word_length = (int)strlen(word);
+        int is_palindrome = 1;
+
+        for (int i = 0, j = word_length - 1; i < j; i++, j--)
+        {
+            if (word[i] != word[j])
+            {
+                is_palindrome = 0;
+                break;
+            }
+        }
+        if (!(is_palindrome && word_length == max_length))
+        {
+            strcat(result, word);
+            strcat(result, " ");
+        }
+        word = strtok(NULL, " ");
+    }
+    printf("%s\n", result);
+    free(str_copy);
+    free(result);
+    free(str);
+}
+
